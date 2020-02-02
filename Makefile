@@ -5,6 +5,8 @@
 #		  (mtoyoda@acm.org)
 #	Last Modified: 2014/03/31
 #==========================================
+# The OG ^...lots of code is gone. Cat is now a train.
+# His name is Jimmy.
 
 CC=gcc
 CFLAGS=-O -Wall
