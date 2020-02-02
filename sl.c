@@ -35,7 +35,7 @@ int main(int argc, char *argv[]) {
     scrollok(stdscr, FALSE);
 
     for (x = COLS - 1; ; --x) {
-      if (x % 5 == 0) {
+      if (x % 7 == 0) {
         if (add_CAT(x,0) == ERR) break;
       }
       else {
@@ -61,7 +61,6 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-
 int add_CAT(int x, int c) {
     static char *CAT[CATPATTERNS][CATHEIGHT]
         = {{CATSTR1, CATSTR2, CATSTR3, CATSTR4, CATSTR5, CATSTR6, CATSTR7, CATSTR8},
@@ -75,7 +74,6 @@ int add_CAT(int x, int c) {
     if (x < - CATLENGTH)  return ERR;
     y = LINES / 2 - 5;
 
-    // int style = c == 0 ? (x % 2) : c;
     for (i = 0; i < CATHEIGHT; ++i) {
       my_mvaddstr(y + i, x, CAT[c][i]);
     }
