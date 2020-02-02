@@ -28,7 +28,6 @@ int my_mvaddstr(int y, int x, char *str) {
 int main(int argc, char *argv[]) {
     int x;
     initscr();
-    // signal(SIGINT, SIG_IGN);
     noecho();
     curs_set(0);
     nodelay(stdscr, TRUE);
@@ -36,20 +35,24 @@ int main(int argc, char *argv[]) {
     scrollok(stdscr, FALSE);
 
     for (x = COLS - 1; ; --x) {
-      if (add_CAT(x,0) == ERR) break;
-      refresh();
-      usleep(50000);
-    }
-    for (x = COLS - 1; ; --x) {
-      if (add_CAT(x,1) == ERR) break;
+      if (x % 5 == 0) {
+        if (add_CAT(x,0) == ERR) break;
+      }
+      else {
+        if (add_CAT(x,1) == ERR) break;
+      }
 
       refresh();
       usleep(50000);
-    }
-    for (x = COLS - 1; ; --x) {
-      if (add_CAT(x,2) == ERR) break;
-      refresh();
-      usleep(50000);
+      if (x == COLS/3) {
+        sleep(1);
+        for (int i = 2; i <= 4; ++i) {
+          if (add_CAT(x,i) == ERR) break;
+          refresh();
+          sleep(2);
+        }
+      }
+
     }
 
     mvcur(0, COLS - 1, LINES - 1, 0);
@@ -62,6 +65,8 @@ int main(int argc, char *argv[]) {
 int add_CAT(int x, int c) {
     static char *CAT[CATPATTERNS][CATHEIGHT]
         = {{CATSTR1, CATSTR2, CATSTR3, CATSTR4, CATSTR5, CATSTR6, CATSTR7, CATSTR8},
+           {CATSTR1, CATSTR2, CATSTR3, CATSTR4, CATSTR5, CATSTR6A, CATSTR7A, CATSTR8A},
+           {CATSTR01, CATSTR02, CATSTR03, CATSTR04, CATSTR05, CATSTR06, CATSTR07, CATSTR08},
            {CATSTR11, CATSTR12, CATSTR13, CATSTR14, CATSTR15, CATSTR16, CATSTR17, CATSTR18},
            {CATSTR21, CATSTR22, CATSTR23, CATSTR24, CATSTR25, CATSTR26, CATSTR27, CATSTR28}};
 
@@ -70,22 +75,9 @@ int add_CAT(int x, int c) {
     if (x < - CATLENGTH)  return ERR;
     y = LINES / 2 - 5;
 
+    // int style = c == 0 ? (x % 2) : c;
     for (i = 0; i < CATHEIGHT; ++i) {
-        my_mvaddstr(y + i, x, CAT[c][i]);
+      my_mvaddstr(y + i, x, CAT[c][i]);
     }
     return OK;
 }
-
-
-// I just really like this addition and don't have the heart to delete it.
-//  TODO: Maybe this should be re-worked to ride Jimmy.
-// void add_man(int y, int x)
-// {
-//     static char *man[2][2] = {{"", "(O)"}, {"Help!", "\\O/"}};
-//     int i;
-//
-//     for (i = 0; i < 2; ++i) {
-//         my_mvaddstr(y + i, x, man[(LOGOLENGTH + x) / 12 % 2][i]);
-//     }
-// }
-// }
