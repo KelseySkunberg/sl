@@ -7,5 +7,5 @@ all.
 
 Copyright 1993,1998,2014 Toyoda Masashi (mtoyoda@acm.org)
 
- The OG ^...lots of code is gone. Cat is now a train.
+ The OG ^...lots of code is gone. Train is now a cat.
  His name is Jimmy.
